@@ -1,7 +1,8 @@
 services:
+
   - type: web
     name: watchdog-laravel
-    env: php
+    runtime: php:8.2  # <-- specify PHP version here
     plan: free
     rootDir: src
     buildCommand: |
@@ -53,7 +54,7 @@ services:
 
   - type: worker
     name: watchdog-worker
-    env: php
+    runtime: php:8.2  # <-- specify PHP version here too
     plan: free
     rootDir: src
     startCommand: php artisan queue:work --sleep=3 --tries=3
@@ -88,5 +89,6 @@ services:
           property: password
 
 databases:
+
   - name: watchdog-db
     plan: free
