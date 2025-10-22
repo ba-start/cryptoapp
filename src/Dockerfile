@@ -22,5 +22,8 @@ RUN composer install --no-dev --optimize-autoloader
 # Expose port for web service
 EXPOSE 8080
 
+# Ensure entrypoint.sh is executable
+RUN chmod +x /var/www/html/entrypoint.sh
+
 # Use entrypoint script for both web and worker
 CMD ["/var/www/html/entrypoint.sh"]
