@@ -58,14 +58,25 @@ Open http://localhost:8000
 
 ---
 
-Scheduled Tasks
+## In Case of Cipher error : 
+
+chmod 664 src/.env
+docker compose up -d --build
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan jwt:secret
+docker compose exec app php artisan config:clear
+docker compose exec app php artisan cache:clear
+docker compose exec app php artisan route:clear
+docker compose exec app php artisan view:clear
+
+## Scheduled Tasks
 
 ImportCoinsJob → hourly (fetch top coins)
 CheckWatchdogs → every minute (send alert emails if targets reached)
 
 Ensure the queue worker is running to process scheduled jobs.
 
-MailHog (Email testing)
+## MailHog (Email testing)
 
 Accessible at http://localhost:8025
 
