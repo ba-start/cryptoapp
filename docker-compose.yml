@@ -1,0 +1,52 @@
+services:
+  app:
+    build: .
+    container_name: crypto_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - mailhog
+    env_file:
+      - src/.env
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      - DOCKER_ENV=true
+      # Mail configuration (overrides .env if necessary)
+      - MAIL_MAILER=smtp
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+      - MAIL_ENCRYPTION=null
+      - MAIL_FROM_ADDRESS=watchdog@example.com
+      - MAIL_FROM_NAME=CryptoWatchdog
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: cryptodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP
+    restart: unless-stopped
+
+volumes:
+  db-data:
