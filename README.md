@@ -102,3 +102,32 @@ docker compose exec app php artisan watchdogs:check
 docker compose exec app php artisan queue:work --tries=3
 ```
 
+## Queue Jobs & WatchDog Emails
+
+Laravel uses a **queue system** to handle background jobs — such as sending WatchDog email alerts — asynchronously.  
+In **production**, these jobs are processed by a **queue worker** or **cron scheduler**, not automatically by Laravel itself.
+
+---
+
+### Why This Matters
+
+If your server’s queue worker (or cron) isn’t running, queued jobs like `PriceChangedJob` will **not execute**, and WatchDog emails will **not be sent**.
+
+---
+
+### Local / Development Usage
+
+When developing or testing locally, you can trigger the WatchDog checks manually:
+
+```bash
+php artisan watchdogs:check
+```
+
+## Production Setup
+
+Make sure your production server runs both the Laravel scheduler and a queue worker continuously.
+
+Example cron entry (runs the scheduler every minute):
+```bash
+* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
+```
