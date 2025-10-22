@@ -60,6 +60,9 @@ Open http://localhost:8000
 
 ## In Case of Cipher error : 
 
+cached .env - (rebuild container)
+
+```bash
 chmod 664 src/.env
 docker compose up -d --build
 docker compose exec app php artisan key:generate
@@ -68,6 +71,8 @@ docker compose exec app php artisan config:clear
 docker compose exec app php artisan cache:clear
 docker compose exec app php artisan route:clear
 docker compose exec app php artisan view:clear
+```
+
 
 ## Scheduled Tasks
 
