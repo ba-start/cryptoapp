@@ -1,8 +1,10 @@
+# render.yaml
+# Laravel deployment on Render.com (web + queue worker + PostgreSQL)
 services:
 
   - type: web
     name: watchdog-laravel
-    runtime: php:8.2  # <-- specify PHP version here
+    runtime: docker
     plan: free
     rootDir: src
     buildCommand: |
@@ -54,7 +56,7 @@ services:
 
   - type: worker
     name: watchdog-worker
-    runtime: php:8.2  # <-- specify PHP version here too
+    runtime: docker
     plan: free
     rootDir: src
     startCommand: php artisan queue:work --sleep=3 --tries=3
