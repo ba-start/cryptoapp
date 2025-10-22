@@ -8,7 +8,6 @@ if [ "$SERVICE_TYPE" = "web" ]; then
     # Ensure .env exists
     if [ ! -f .env ]; then
         cp .env.example .env
-        php artisan key:generate --force
     fi
 
     # Laravel optimization
