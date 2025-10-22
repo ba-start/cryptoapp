@@ -1,6 +1,5 @@
 # render.yaml
-# Deploy Laravel app (in ./src) to Render.com with PostgreSQL and background queue worker
-
+# Laravel deployment on Render.com (web + queue worker + PostgreSQL)
 services:
   - type: web
     name: watchdog-laravel
@@ -15,8 +14,7 @@ services:
       php artisan view:cache
       php artisan migrate --force
       php artisan coins:import --top=1000 --per_page=250
-    startCommand: |
-      php artisan serve --host 0.0.0.0 --port $PORT
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
     envVars:
       - key: APP_ENV
         value: production
@@ -65,7 +63,7 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        sync: true
+        generateValue: true
       - key: QUEUE_CONNECTION
         value: database
       - key: DB_CONNECTION
