@@ -27,32 +27,43 @@ docker compose exec app php artisan queue:work
 ## Setup
 
 1. **Clone the repository**
-
+```bash
 git clone https://github.com/yourusername/crypto-watchdog.git
 cd crypto-watchdog
-
-2. Copy .env example
+```
+2. **Copy .env example**
+```bash
 cp .env.example .env
-
-Fill in DB_PASSWORD:
+```
+***Fill in DB_PASSWORD:***
+```bash
 match the password in docker-compose.yml
-
-Fill in APP_KEY:
+```
+***Fill in APP_KEY:***
+```bash
 docker compose run --rm app php artisan key:generate
-
-Fill in JWT_SECRET:
+```
+***Fill in JWT_SECRET:***
+```bash
 docker compose run --rm app php artisan jwt:secret
-
-3. Build and start Docker containers
+```
+***3. Build and start Docker containers***
+```bash
 docker compose up -d --build
-
-4. Run migrations and seed database
+```
+***4. Run migrations and seed database***
+```bash
 docker compose run --rm app php artisan migrate --seed
-
-5. Run queue worker
+```
+***4.2 (Optional) Import Coins***
+```bash
+docker compose exec app php artisan coins:import --top=1000 --per_page=250
+```
+***5. Run queue worker***
+```bash
 docker compose exec app php artisan queue:work
-
-6. Access the app
+```
+***6. Access the app***
 
 Open http://localhost:8000
 
