@@ -33,7 +33,7 @@ cd crypto-watchdog
 ```
 2. **Copy .env example**
 ```bash
-cp .env.example .env
+cp src/.env.example src/.env
 ```
 ***Fill in DB_PASSWORD:***
 ```bash
