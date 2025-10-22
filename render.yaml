@@ -1,96 +1,21 @@
-# render.yaml
-# Laravel deployment on Render.com (web + queue worker + PostgreSQL)
 services:
-
   - type: web
     name: watchdog-laravel
     runtime: docker
     plan: free
     rootDir: src
     buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan key:generate --force
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-      php artisan migrate --force
-      php artisan coins:import --top=1000 --per_page=250
-    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+      # Optional: pre-build steps
+      echo "Docker build will handle dependencies"
     envVars:
-      - key: APP_ENV
-        value: production
-      - key: APP_KEY
-        generateValue: true
-      - key: APP_DEBUG
-        value: false
-      - key: APP_URL
-        value: https://watchdog-laravel.onrender.com
-      - key: LOG_CHANNEL
-        value: stack
-      - key: QUEUE_CONNECTION
-        value: database
-      - key: MAIL_MAILER
-        value: log
-      - key: DB_CONNECTION
-        value: pgsql
-      - key: DB_HOST
-        fromDatabase:
-          name: watchdog-db
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: watchdog-db
-          property: port
-      - key: DB_DATABASE
-        fromDatabase:
-          name: watchdog-db
-          property: database
-      - key: DB_USERNAME
-        fromDatabase:
-          name: watchdog-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: watchdog-db
-          property: password
+      # ... same as before, without startCommand
 
   - type: worker
     name: watchdog-worker
     runtime: docker
     plan: free
     rootDir: src
-    startCommand: php artisan queue:work --sleep=3 --tries=3
+    buildCommand: |
+      echo "Docker build handles dependencies"
     envVars:
-      - key: APP_ENV
-        value: production
-      - key: APP_KEY
-        generateValue: true
-      - key: QUEUE_CONNECTION
-        value: database
-      - key: DB_CONNECTION
-        value: pgsql
-      - key: DB_HOST
-        fromDatabase:
-          name: watchdog-db
-          property: host
-      - key: DB_PORT
-        fromDatabase:
-          name: watchdog-db
-          property: port
-      - key: DB_DATABASE
-        fromDatabase:
-          name: watchdog-db
-          property: database
-      - key: DB_USERNAME
-        fromDatabase:
-          name: watchdog-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: watchdog-db
-          property: password
-
-databases:
-
-  - name: watchdog-db
-    plan: free
+      # ... same as before
