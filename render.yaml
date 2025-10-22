@@ -1,5 +1,3 @@
-# render.yaml
-# Laravel deployment on Render.com (web + queue worker + PostgreSQL)
 services:
   - type: web
     name: watchdog-laravel
