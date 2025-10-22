@@ -97,12 +97,12 @@ Ensure the queue worker is running to process scheduled jobs.
 Accessible at http://localhost:8025
 
 ## Basic Usage 
-###Import Coins
+### Import Coins
 ```bash
 docker compose exec app php artisan coins:import --top=1000 --per_page=250
 ```
 
-###Check Watchdogs
+### Check Watchdogs
 ```bash
 docker compose exec app php artisan watchdogs:check
 docker compose exec app php artisan queue:work --tries=3
