@@ -34,6 +34,9 @@ cd crypto-watchdog
 2. Copy .env example
 cp .env.example .env
 
+Fill in DB_PASSWORD:
+match the password in docker-compose.yml
+
 Fill in APP_KEY:
 docker compose run --rm app php artisan key:generate
 
