@@ -17,6 +17,12 @@ if [ "$SERVICE_TYPE" = "web" ]; then
 
     # Run migrations (optional, can be removed if you prefer manual)
     php artisan migrate --force
+    
+    # Import top 1000 coins (web service only)
+    if [ "$SERVICE_TYPE" = "web" ] && [ ! -f .coins_imported ]; then
+        php artisan coins:import --top=1000 --per_page=250
+        touch .coins_imported
+    fi
 
     # Start Laravel server
     php artisan serve --host=0.0.0.0 --port=8080
