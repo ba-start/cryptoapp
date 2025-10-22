@@ -9,7 +9,7 @@ A Laravel-based cryptocurrency WatchDog app running fully in Docker.
 
 ## Quick start after cloning repo
 ```bash
-cp src/.env.example src/.env
+cp src/.env.example src/.env    # fill in DB_PASSWORD match the password in docker-compose.yml (manually)
 docker compose up -d --build
 docker compose exec app composer install
 docker compose exec app php artisan key:generate
